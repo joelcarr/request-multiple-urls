@@ -1,0 +1,24 @@
+{
+  "name": "request-multiple-urls",
+  "version": "1.0.0",
+  "description": "Get a single response from an array of URLs.",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint src/ test/",
+    "test": "node test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://git.example.com/request-multiple-urls.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://example.com/request-multiple-urls/issues"
+  },
+  "homepage": "https://example.com/request-multiple-urls#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1"
+  }
+}
