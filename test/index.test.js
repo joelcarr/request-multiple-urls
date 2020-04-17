@@ -1,18 +1,44 @@
+const axios = require("axios");
 const requestMultipleUrls = require("../src/index");
 
-test("returns a success message", () => {
-  expect(requestMultipleUrls()).toBe("Hello world");
-});
+jest.mock("axios");
 
-describe("When supplied with an array", () => {
-  it.todo("returns a promise");
-  it.todo("does not return an error");
+describe.each([
+  [["http://example.com/api/1"]],
+  [
+    [
+      "http://example.com/api/1",
+      "http://example.com/api/2",
+      "http://example.com/api/3"
+    ]
+  ]
+])("When supplied with an array", arrayOfUrls => {
+  let request;
+
+  beforeEach(() => {
+    const response = { data: "Some data" };
+    axios.get.mockResolvedValue(response);
+    request = requestMultipleUrls(arrayOfUrls);
+  });
+
+  afterEach(() => {
+    request = undefined;
+    axios.get.mockClear();
+  });
+
+  it("axios.get to have been called with each URL", () => {
+    arrayOfUrls.map(url => expect(axios.get).toHaveBeenCalledWith(url));
+  });
+
+  it("should resolve with the same number of responses as URLs provided", () => {
+    request.then(data => expect(data.length).toEqual(arrayOfUrls.length));
+  });
 });
 
 describe("When NOT supplied with an array", () => {
-  it.todo("returns with an error message asking for an array");
-});
-
-describe("When a URL in the array fails to return JSON", () => {
-  it.todo("returns a message to say URL failed");
+  it("returns with an error message asking for an array", () => {
+    expect(() => requestMultipleUrls("Not an array")).toThrow(
+      "Please supply an array of URLs"
+    );
+  });
 });
