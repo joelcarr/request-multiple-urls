@@ -4,6 +4,7 @@
   "description": "Get a single response from an array of URLs.",
   "main": "src/index.js",
   "scripts": {
+    "dev": "npm run test:watch",
     "lint": "eslint src/ test/",
     "test": "jest",
     "test:watch": "jest --watch"
